@@ -25,6 +25,7 @@
   export let nodesStore: any;
   export let derivedEdges: any;
   export let key: string;
+  export let edgesStore: any;
 
   // here we lookup the store using the unique key
   const svelvetStore = findOrCreateStore(key);
@@ -118,7 +119,7 @@
 
   <!-- <g> tag defines which edge type to render depending on properties of edge object -->
   <g>
-    {#each $derivedEdges as edge}
+    {#each $edgesStore as edge}
       {#if edge.type === 'straight'}
         <StraightEdge {edge} />
       {:else if edge.type === 'smoothstep'}
