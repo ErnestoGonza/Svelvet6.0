@@ -1,6 +1,6 @@
 <script>
 
-  import Svelvet from 'svelvet';
+  import Svelvet from '$lib/Containers/Svelvet/index.svelte'
 
 	const initialNodes = [
 		{
