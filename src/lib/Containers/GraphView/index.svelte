@@ -92,7 +92,7 @@
 </div>
 
 <!-- rendering dots on the background depending on the zoom level -->
-<svg class={`Edges Edges-${key}`} viewBox="0 0 {$widthStore} {$heightStore}">
+<svg class={`Edges Edges-${key}`} viewBox="0 0 {$widthStore} {$heightStore}" style="background-color:white">
   <defs>
     <pattern
       id={`background-${key}`}
@@ -101,7 +101,7 @@
       width={gridSize}
       height={gridSize}
       patternUnits="userSpaceOnUse"
-    >
+    >   
       <circle
         id="dot"
         cx={gridSize / 2 - dotSize / 2}
