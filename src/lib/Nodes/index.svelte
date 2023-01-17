@@ -28,7 +28,6 @@
 
 <svelte:window
   on:mousemove={(e) => {
-    console.log(e.clientX)
     e.preventDefault();
     if (shouldMove) {
       onMouseMove(e, node.id);
