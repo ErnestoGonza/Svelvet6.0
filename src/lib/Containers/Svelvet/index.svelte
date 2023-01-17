@@ -19,7 +19,7 @@
   // this way we can have multiple Svelvet Components on the same page and prevent overlap of information
   const svelvetStore = findOrCreateStore(key);
   // stores (state) within stores, so that we cannot access values from everywhere
-  const { widthStore, heightStore, nodesStore, derivedEdges } = svelvetStore;
+  const { widthStore, heightStore, nodesStore, derivedEdges, edgesStore } = svelvetStore;
 
   // sets the state of the store to the values passed in from the Svelvet Component on initial render
   onMount(() => {
@@ -41,6 +41,9 @@
   });
 </script>
 
+<button on:click={()=>{console.log('nodes',$nodesStore)}}>nodes</button>
+<button on:click={()=>{console.log('edgesStore',$edgesStore)}}>edges</button>
+<button on:click={()=>{console.log('derivedEdges',$derivedEdges)}}>derivedEdges</button>
 <!-- Now that a store has been created from the initial nodes and initial edges we drill props from the store down to the D3 GraphView along with the unique key -->
 <div class="Svelvet" style={`width: ${width}px; height: ${height}px`}>
   <GraphView {nodesStore} {derivedEdges} {key} />
