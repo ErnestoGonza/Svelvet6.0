@@ -22,8 +22,6 @@
   const { widthStore, heightStore, nodesStore, derivedEdges, edgesStore } = svelvetStore;
 
   // sets the state of the store to the values passed in from the Svelvet Component on initial render
-  import { writable, derived, get, readable } from 'svelte/store';
-
   onMount(() => {
     svelvetStore.nodesStore.set(nodes);
     svelvetStore.edgesStore.set(edges);
@@ -41,6 +39,7 @@
     svelvetStore.backgroundStore.set(background);
     svelvetStore.movementStore.set(movement);
   });
+
 </script>
 
 <button on:click={()=>{console.log('nodes',$nodesStore)}}>nodes</button>
@@ -48,7 +47,7 @@
 <button on:click={()=>{console.log('derivedEdges',$derivedEdges)}}>derivedEdges</button>
 <!-- Now that a store has been created from the initial nodes and initial edges we drill props from the store down to the D3 GraphView along with the unique key -->
 <div class="Svelvet" style={`width: ${width}px; height: ${height}px`}>
-  <GraphView {nodesStore} {derivedEdges} {edgesStore} {key} />
+  <GraphView {nodesStore} {edgesStore} {key} />
 </div>
 
 <style>

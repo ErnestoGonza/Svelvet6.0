@@ -23,7 +23,6 @@
 
   //these are typscripted as any, however they have been transformed inside of store.ts
   export let nodesStore: any;
-  export let derivedEdges: any;
   export let key: string;
   export let edgesStore: any;
 
