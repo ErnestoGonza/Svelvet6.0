@@ -2,6 +2,7 @@
   import { createStore, Node } from '$lib/stores/newStore';
   import { onMount } from 'svelte';
   import { v4 as uuid } from 'uuid';
+  import { get } from 'svelte/store';
   // props
   export let nodes;
   export let edges;
@@ -33,16 +34,14 @@
     }
     return res;
   }
-
-  //   interface NodeType {
-  //     id: string;
-  //     width: number;
-  //     height: number;
-  //     positionX: number;
-  //     positionY: number;
-  //     bgColor: string;
-  //     data: string;
-  //   }
 </script>
 
 <h1>hello world</h1>
+
+{#each Object.entries($nodesStore) as entry}
+  <div
+    style="background-color:black; 
+           width:{entry[1].width}px;
+           height:{entry[1].height}px;"
+  />
+{/each}
