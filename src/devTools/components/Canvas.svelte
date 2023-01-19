@@ -8,12 +8,13 @@
   export let edges;
 
   // Creates an empty store
-  const { nodesStore, edgesStore, anchorsStore } = createStore();
+  const { nodesStore, edgesStore, anchorsStore, onMouseMove } = createStore();
 
   // populate the store with user input
   onMount(() => {
     nodesStore.set(parseUserNodes(nodes));
     console.log($nodesStore);
+    console.log(onMouseMove);
   });
 
   // this converts user input into a object of nodeTypes
