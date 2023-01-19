@@ -53,12 +53,24 @@ interface AnchorType {
   getPosition: Function;
 }
 
-export function createStore() {
+const svelvetStores: { [key: string]: any } = {};
+
+export function findStore(key: string) {
+  if (svelvetStores[key] === undefined)
+    throw `key not found in svelvetStore: ${key}`;
+  return svelvetStores[key];
+}
+
+/* 
+   Creates a new store and puts in it svelvetStores
+   Returns the new store
+*/
+export function createStore(key: string) {
   const nodesStore = writable({});
   const edgesStore = writable({});
   const anchorsStore = writable({});
   const onMouseMove = (e: any, nodeId: string) => {
-    nodesStore.update((obj) => {
+    nodesStore.update((obj: { [key: string]: any }) => {
       obj[nodeId].positionX += e.movementX;
       obj[nodeId].positionY += e.movementY;
       return { ...obj }; // TODO: is this necessary?
@@ -72,7 +84,8 @@ export function createStore() {
     onMouseMove,
   };
 
-  return testingCoreStore;
+  svelvetStores[key] = testingCoreStore;
+  return svelvetStores[key];
 }
 
 export class Edge implements EdgeType {

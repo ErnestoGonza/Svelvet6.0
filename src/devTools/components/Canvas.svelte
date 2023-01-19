@@ -3,18 +3,20 @@
   import { onMount } from 'svelte';
   import { v4 as uuid } from 'uuid';
   import { get } from 'svelte/store';
+  import NodeComponent from './Node.svelte'; // TODO: refactor name
+
   // props
   export let nodes;
   export let edges;
 
   // Creates an empty store
-  const { nodesStore, edgesStore, anchorsStore, onMouseMove } = createStore();
+  const canvasId = uuid();
+  const { nodesStore, edgesStore, anchorsStore, onMouseMove } =
+    createStore(canvasId);
 
   // populate the store with user input
   onMount(() => {
     nodesStore.set(parseUserNodes(nodes));
-    console.log($nodesStore);
-    console.log(onMouseMove);
   });
 
   // this converts user input into a object of nodeTypes
@@ -37,7 +39,7 @@
   }
 </script>
 
-{#each Object.entries($nodesStore) as entry}
+<!-- {#each Object.entries($nodesStore) as entry}
   <div
     style="background-color:black; 
            width:{entry[1].width}px;
@@ -46,4 +48,8 @@
            top:{entry[1].positionY}px;
            left:{entry[1].positionX}px;"
   />
+{/each} -->
+
+{#each Object.entries($nodesStore) as entry}
+  <NodeComponent {canvasId} nodeId={entry[0]} />
 {/each}
