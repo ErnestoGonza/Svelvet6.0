@@ -36,12 +36,13 @@
   }
 </script>
 
-<h1>hello world</h1>
-
 {#each Object.entries($nodesStore) as entry}
   <div
     style="background-color:black; 
            width:{entry[1].width}px;
-           height:{entry[1].height}px;"
+           height:{entry[1].height}px;
+           position:absolute;
+           top:{entry[1].positionY}px;
+           left:{entry[1].positionX}px;"
   />
 {/each}
