@@ -27,18 +27,15 @@
     // in theory, the mouse should always stay within the component and never go outside so this is unnecessary
     // in practice, there may be a bug and the cursor may leave the component while moving it, and then the
     // mouseup event won't be detected
+    e.preventDefault();
     isSelected = false;
   }}
 />
 
 <div
   on:mousedown={(e) => {
+    e.preventDefault();
     isSelected = true;
-    // $nodeIdSelected = node.id;
-    // $nodeSelected = true;
-  }}
-  on:mouseup={(e) => {
-    isSelected = false;
   }}
   style="left: {node.positionX}px;
     top: {node.positionY}px;
