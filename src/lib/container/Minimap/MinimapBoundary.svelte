@@ -1,15 +1,17 @@
-<script>
+<script lang="ts">
   import { findStore } from '../../store/controllers/storeApi';
   import { onMount, createEventDispatcher } from 'svelte';
   import GreyNode from './GreyNodeBoundary.svelte';
 
-  export let canvasId;
+  export let canvasId: string;
   export let boundary;
   export let d3Translate;
 
   const svelvetStore = findStore(canvasId);
   const { nodesStore, heightStore, widthStore } = svelvetStore;
   const dispatch = createEventDispatcher(); // dispatch creates a message to be sent
+  const nodesValues = Object.values($nodesStore);
+
   let mapHeight = 100;
   let mapWidth = 100;
   let widthRatio = 1;
@@ -73,7 +75,7 @@
       d3Translate.k}px; width:{($widthStore * widthRatio) /
       d3Translate.k}px; top:{viewBottom}px; left:{viewRight}px;"
   />
-  {#each $nodesStore as node}
+  {#each nodesValues as node}
     <GreyNode {node} {heightRatio} {widthRatio} />
   {/each}
 </div>

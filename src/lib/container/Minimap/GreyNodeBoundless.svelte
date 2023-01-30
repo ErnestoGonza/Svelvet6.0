@@ -1,5 +1,5 @@
 <script>
-  export let key;
+  export let canvasId;
   export let node;
   export let heightRatio;
   export let widthRatio;
@@ -22,7 +22,7 @@
 </script>
 
 <div
-  class="nodes nodes-{key}"
+  class="nodes nodes-{canvasId}"
   style="top: {top}px; left: {left}px; height: {nHeight}px; width:{nWidth}px"
 />
 

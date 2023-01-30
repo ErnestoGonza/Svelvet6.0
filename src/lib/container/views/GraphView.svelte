@@ -117,9 +117,8 @@
 
 <!-- This is the container that holds GraphView and we have disabled right click functionality to prevent a sticking behavior -->
 <div class={`Nodes Nodes-${canvasId}`} on:contextmenu|preventDefault>
-  <MinimapBoundary {canvasId} {d3Translate} />
-  <!-- <MinimapBoundless {canvasId} {d3Translate} /> -->
-
+  <MinimapBoundary {canvasId} boundary={{ x: 0, y: 0 }} {d3Translate} />
+  <MinimapBoundless {canvasId} {d3Translate} />
   <!-- This container is transformed by d3zoom -->
   <div class={`Node Node-${canvasId}`}>
     {#each nodes as node}

@@ -1,15 +1,14 @@
-<script>
-  import { stores } from '../../store/models/store';
+<script lang="ts">
+  import { findStore } from '../../store/controllers/storeApi';
   import { onMount, createEventDispatcher } from 'svelte';
   import GreyNode from './GreyNodeBoundless.svelte';
 
-  export let canvasId;
+  export let canvasId: string;
   export let d3Translate;
 
-  const svelvetStore = stores[canvasId];
-  
+  const svelvetStore = findStore(canvasId);
   const { nodesStore, widthStore, heightStore } = svelvetStore;
-
+  const nodesValues = Object.values($nodesStore);
   //placeholdervalues for initialization
   //dispatch for message to be sent
   const dispatch = createEventDispatcher();
@@ -23,8 +22,8 @@
   let viewWidth = 10;
   let viewRight = 10;
   let viewBottom = 10;
-  let heightRatio = 1;
-  let widthRatio = 1;
+  let heightRatio: number = 1;
+  let widthRatio: number = 1;
   let nodeXleftPosition = Infinity;
   let nodeYtopPosition = -Infinity;
   let nodeYbottomPosition = Infinity;
@@ -41,12 +40,15 @@
     nodeXrightPosition = -Infinity;
 
     // looks for the top-most, bottom-most, left-most, right-most values for the furthest node in those perspective values to find the boundaries of the size of the diagram
-    $nodesStore.forEach((node) => {
-      nodeXleftPosition = Math.min(nodeXleftPosition, node.position.x);
-      nodeXrightPosition = Math.max(nodeXrightPosition, node.position.x);
-      nodeYbottomPosition = Math.min(nodeYbottomPosition, node.position.y);
-      nodeYtopPosition = Math.max(nodeYtopPosition, node.position.y);
+
+    nodesValues.forEach((node) => {
+      console.log(node);
+      nodeXleftPosition = Math.min(nodeXleftPosition, node.positionX);
+      nodeXrightPosition = Math.max(nodeXrightPosition, node.positionX);
+      nodeYbottomPosition = Math.min(nodeYbottomPosition, node.positionY);
+      nodeYtopPosition = Math.max(nodeYtopPosition, node.positionY);
     });
+
     // sets the height, width of nodes after movement
     nodeHeight = nodeYtopPosition - nodeYbottomPosition;
     nodeWidth = nodeXrightPosition - nodeXleftPosition;
@@ -115,7 +117,7 @@
     class="viewBox viewBox-{canvasId}"
     style="height:{viewHeight}px; width:{viewWidth}px; top:{viewBottom}px; left:{viewRight}px;"
   />
-  {#each $nodesStore as node}
+  {#each nodesValues as node}
     <GreyNode
       {node}
       {canvasId}
