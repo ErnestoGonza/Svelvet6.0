@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { zoom, zoomTransform } from 'd3-zoom';
+  import { zoom, zoomTransform, zoomIdentity } from 'd3-zoom';
   import { select, selectAll } from 'd3-selection';
 
   import SimpleBezierEdge from '$lib/edges/views/Edges/SimpleBezierEdge.svelte';
@@ -18,6 +18,8 @@
   import { findStore } from '$lib/store/controllers/storeApi';
   import PotentialAnchor from '../../interactiveNodes/views/PotentialAnchor.svelte';
   import TemporaryEdge from '../../interactiveNodes/views/TemporaryEdge.svelte';
+  import MinimapBoundless from '../Minimap/MinimapBoundless.svelte';
+  import MinimapBoundary from '../Minimap/MinimapBoundary.svelte';
 
   // leveraging d3 library to zoom/pan
   let d3 = {
@@ -25,6 +27,7 @@
     zoomTransform,
     select,
     selectAll,
+    zoomIdentity,
   };
 
   //these are typscripted as any, however they have been transformed inside of store.ts
@@ -104,10 +107,19 @@
       )
       .style('transform-origin', '0 0');
   }
+
+  let d3Translate = { x: 0, y: 0, k: 1 };
+
+  d3Translate = d3.zoomIdentity
+    .translate(0, 0)
+    .scale(Number.parseFloat(0.4 + 0.16 * 4).toFixed(2));
 </script>
 
 <!-- This is the container that holds GraphView and we have disabled right click functionality to prevent a sticking behavior -->
 <div class={`Nodes Nodes-${canvasId}`} on:contextmenu|preventDefault>
+  <MinimapBoundary {canvasId} {d3Translate} />
+  <!-- <MinimapBoundless {canvasId} {d3Translate} /> -->
+
   <!-- This container is transformed by d3zoom -->
   <div class={`Node Node-${canvasId}`}>
     {#each nodes as node}
